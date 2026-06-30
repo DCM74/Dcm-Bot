@@ -1,30 +1,31 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const puppeteer = require('puppeteer-core');
 
+// Configuration du client
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
-        // Pas d'executablePath, puppeteer-core le trouve automatiquement
     }
 });
 
-// Le reste du code est IDENTIQUE à avant
+// QR Code
 client.on('qr', qr => {
-    console.log('📱 Scanne ce QR code :');
+    console.log('📱 Scanne ce QR code avec WhatsApp :');
     qrcode.generate(qr, { small: true });
 });
 
+// Connecté
 client.on('ready', () => {
     console.log('✅ Bot WhatsApp connecté !');
 });
 
+// Répondre aux messages
 client.on('message', async message => {
     const msg = message.body.toLowerCase().trim();
 
-    if (msg === 'bonjour') {
+    if (msg === 'bonjour' || msg === 'salut') {
         await message.reply('👋 Bonjour ! Comment vas-tu ?');
     } else if (msg === 'heure') {
         const now = new Date();
@@ -42,4 +43,5 @@ client.on('message', async message => {
     }
 });
 
+// Démarrer
 client.initialize();
