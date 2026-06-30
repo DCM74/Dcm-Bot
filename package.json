@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js",
-    "postinstall": "apt-get update && apt-get install -y chromium"
+    "start": "node bot.js"
   },
   "dependencies": {
     "whatsapp-web.js": "^1.23.0",
-    "qrcode-terminal": "^0.12.0",
-    "puppeteer": "^21.0.0"
+    "qrcode-terminal": "^0.12.0"
   }
 }
