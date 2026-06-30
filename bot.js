@@ -1,28 +1,25 @@
 // ============================================================
-// BOT WHATSAPP - VERSION DOCKER POUR RENDER
+// BOT WHATSAPP - VERSION RENDER (avec Docker)
 // ============================================================
 
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
 // ============================================================
-// 1. CONFIGURATION DU CLIENT (avec Chromium)
+// 1. CONFIGURATION DU CLIENT
 // ============================================================
 const client = new Client({
     authStrategy: new LocalAuth(),
-    puppeteer: {
-        // Configuration pour Render avec Docker
+    puppeteer: { 
         headless: true,
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
             '--disable-accelerated-2d-canvas',
-            '--disable-gpu',
-            '--disable-software-rasterizer'
-        ],
-        // Chemin vers Chromium installé dans le conteneur Docker
-        executablePath: '/usr/bin/chromium'
+            '--disable-gpu'
+        ]
+        // executablePath n'est PAS nécessaire (l'image Docker s'en occupe)
     }
 });
 
@@ -124,7 +121,7 @@ client.on('message', async message => {
             );
         }
 
-        // ----- Commandes personnalisées (modifiables) -----
+        // ----- Commandes personnalisées -----
         else if (msg === 'dev' || msg === 'créateur') {
             await message.reply('👨‍💻 Ce bot a été créé avec ❤️ par DCM Pro !');
         }
